@@ -2,6 +2,7 @@
   "name": "social-media-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tkrose.github.io/social-media-app/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
