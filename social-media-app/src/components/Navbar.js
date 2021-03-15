@@ -11,18 +11,18 @@ function Navbar(props) {
     return (
         <nav className={css.navbar}>
             <div className={css.navItem}>
-                <button>
+                <button onClick={e=>handleNavChange('home')}>
                     <img src={publicUrl('/assets/home.svg')} alt="Home"/>
                 </button>
             </div>
             <div className={css.navItem}>
-                <button>
+                <button onClick={e=>handleNavChange('explore')}>
                     <img src={publicUrl('/assets/explore.svg')} alt="Explore"/>
                 </button>
             </div>
             <div className={css.navItem}>
                 <button onClick={e=>handleNavChange('newpost')}>
-                    <img src={publicUrl('/assets/newpost.svg')} alt="New Post"/>
+                    <img src={publicUrl('/assets/newpost.svg')} alt="NewPost"/>
                 </button>
             </div>
             <div className={css.navItem}>
