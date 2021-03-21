@@ -1,7 +1,25 @@
 import React from 'react';
 import Post from './Post';
 
-function Home() {
+function fineUser(post, store){
+    return store.users.find(user=>user.id===post.userId);
+  }
+
+function findComments(post, store){
+  return store.comments.filter(comment=>comment.postId===post.id);
+}
+
+function findLikes(post, store){
+  let postLikes = store.likes.filter(like=>like.postId===post.id);
+  return {
+    self: postLikes.some(like=> like.userId===store.currentUserId),
+    count: postLikes.length
+  }
+}
+
+function Home(props) {
+    const {store} = props;
+    
     const post = {
         user:{
             id:"judy",
@@ -30,12 +48,19 @@ function Home() {
         ]
     };
  
-    return <Post 
-        user={post.user} 
-        likes = {post.likes} 
-        post = {post.post} 
-        comments={post.comments}  
-    />
+    return (
+		<div>
+      {store.posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
+      .map(post=>
+				<Post
+	        key={post.id}
+	        user={fineUser(post, store)}
+	        post={post}
+	        comments={findComments(post, store)}
+	        likes={findLikes(post, store)}
+	      />)}
+    </div>
+	);
 }
 
 export default Home;
