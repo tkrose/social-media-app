@@ -1,0 +1,80 @@
+.user img {
+  height: 45px;
+  border-radius: 100%;
+}
+
+.user p {
+  font-weight: bold;
+}
+
+.user {
+  display: flex;
+  margin-left: 2%;
+  gap: 10px;
+}
+
+.post{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+}
+
+.post img{
+  max-width: 100%;
+  height: auto;
+}
+
+.icons {
+  display: flex;
+  margin-left: 1%;
+  gap: 10px;
+}
+
+.likes {
+  display: flex;
+  margin-left: 1%;
+  gap: 10px;
+}
+
+.com {
+  display: flex;
+  margin-left: 1%;
+  gap: 10px;
+}
+
+.com p {
+  margin: 0px;
+}
+
+.time {
+  color: gray;
+  margin-left: 1%;
+}
+
+.addComment{
+  margin-top: 6px;
+  border-bottom: 1px solid #efefef;
+  padding: 10px 0;
+  display: flex;
+  margin-left: 2%;
+}
+.addComment input{
+  background: none;
+  border: none;
+  height: 16px;
+  outline: none;
+  font:inherit;
+  padding: 0;
+  width: 100%;
+}
+.addComment ::placeholder { 
+  color: #999;
+}
+.addComment button{
+  color:#3897f0;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+  
+  
