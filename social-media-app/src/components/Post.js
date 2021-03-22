@@ -4,6 +4,16 @@ import publicUrl from 'utils/publicUrl';
 import timespan from 'utils/timespan.js';
 
 function Post(props) {
+    function handleLike(){ 
+        console.log("Post liked");
+        props.onLike(props.post.id);
+    }
+    
+    function handleUnlike(){
+        console.log("Post unliked");
+        props.onUnlike(props.post.id);
+    }
+
     return (
         <article className={css.post}>
             <header className={css.header}>
@@ -20,10 +30,13 @@ function Post(props) {
             </section>
     
             <section className={css.actions}> 
-                <button> {props.likes.self? 
-                    <img src={publicUrl('/assets/unlike.svg')} alt='Unlike Action'/> : <img src={publicUrl('/assets/like.svg')} alt='Like Action'/> } 
+                <button> 
+                    {props.likes.self? 
+                        <img onClick={handleUnlike} src={publicUrl('/assets/unlike.svg')} alt='Unlike Action'/> : 
+                        <img onClick={handleLike} src={publicUrl('/assets/like.svg')} alt='Like Action'/> 
+                    } 
                 </button> 
-                <button > 
+                <button> 
                     <img src={publicUrl('/assets/comment.svg')} alt='Comment Action'/> 
                 </button> 
             </section> 

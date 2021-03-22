@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post';
 
-function fineUser(post, store){
+function findUser(post, store){
     return store.users.find(user=>user.id===post.userId);
   }
 
@@ -20,44 +20,46 @@ function findLikes(post, store){
 function Home(props) {
     const {store} = props;
     
-    const post = {
-        user:{
-            id:"judy",
-            photo:"/assets/user1.png",
-        },
-        post:{
-            id:"post-1",
-            userId:"judy",
-            photo:"/assets/post1.png",
-            desc:"#zootopia #excited",
-            datetime: "2020-02-09T22:45:28Z"
-        },
-        likes: {
-            self: true,
-            count:1
-        },
-        comments:[
-            {
-          userId:"nick",
-          text:"Welcome to Zootopia!"
-        },
-        {
-            userId:"judy",
-            text:"Thanks!😁Looking forward to meeting you!"
-        }
-        ]
-    };
+    // const post = {
+    //     user:{
+    //         id:"judy",
+    //         photo:"/assets/user1.png",
+    //     },
+    //     post:{
+    //         id:"post-1",
+    //         userId:"judy",
+    //         photo:"/assets/post1.png",
+    //         desc:"#zootopia #excited",
+    //         datetime: "2020-02-09T22:45:28Z"
+    //     },
+    //     likes: {
+    //         self: true,
+    //         count:1
+    //     },
+    //     comments:[
+    //         {
+    //       userId:"nick",
+    //       text:"Welcome to Zootopia!"
+    //     },
+    //     {
+    //         userId:"judy",
+    //         text:"Thanks!😁Looking forward to meeting you!"
+    //     }
+    //     ]
+    // };
  
     return (
 		<div>
       {store.posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
       .map(post=>
-				<Post
+			<Post
 	        key={post.id}
-	        user={fineUser(post, store)}
+	        user={findUser(post, store)}
 	        post={post}
 	        comments={findComments(post, store)}
 	        likes={findLikes(post, store)}
+            onLike={props.onLike} 
+            onUnlike={props.onUnlike}
 	      />)}
     </div>
 	);
