@@ -1,25 +1,27 @@
 import React from 'react';
-import css from './Home.module.css';
-import publicUrl from '../utils/publicUrl';
 import Post from './Post';
+import { useParams } from 'react-router-dom';
 
 function Home(props) {
-    const {store} = props;
-
-    return (
+  let {postId} = useParams();
+  const store = props.store;
+  
+  return (
 		<div>
-            {store.posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
-            .map(post=>
-                <Post
-                    key={post.id}
-                    user={findUser(post, store)}
-                    post={post}
-                    comments={findComments(post, store)}
-                    likes={findLikes(post, store)}
-                    onLike={props.onLike} 
-                    onUnlike={props.onUnlike}
-                    onComment={props.onComment}
-                />)}
+      {(postId === undefined ? store.posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime)) :  store.posts.filter(post => post.id === postId))
+      .map(post=>
+        <Post
+          key={post.id}
+          user={findUser(post, store)}
+          post={post}
+          desc={post.desc}
+          comments={findComments(post, store)}
+          likes={findLikes(post, store)}
+          store = {store}
+          onLike={props.onLike} 
+          onUnlike={props.onUnlike}
+          onComment={props.onComment}
+        />)}
     </div>
 	);
 }

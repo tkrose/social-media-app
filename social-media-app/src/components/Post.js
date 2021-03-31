@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import css from './Post.module.css';
 import publicUrl from '../utils/publicUrl';
 import timespan from '../utils/timespan';
-
+import { Link } from "react-router-dom";
 
 function Post(props) {
     function handleLike() {
         console.log('like');
         props.onLike(props.post.id);
-      }
+    }
     
     function handleUnlike() {
         console.log('unlike');
         props.onUnlike(props.post.id);
-      }
+    }
 
     function handleSubmitComment(event){
         props.onComment(props.post.id, comment); // this calls addComment from App.js
@@ -27,10 +27,12 @@ function Post(props) {
 
     return (
         <div className={css.allpost}>
-            <div className={css.user}>
-                <img src={publicUrl(props.user.photo)} alt="Profile Pic"/>
-                <p>{props.user.id}</p>
-            </div>
+            <Link to={'/profile/'.concat(props.user.id)}  class={css.linkToProfile}>
+                <div className={css.user}>
+                    <img src={publicUrl(props.user.photo)} alt="Profile Pic"/>
+                    <p>{props.user.id}</p>
+                </div>
+            </Link>
             <div className={css.post}>
                 <img src={publicUrl(props.post.photo)} alt="Post Photo"/>
             </div>

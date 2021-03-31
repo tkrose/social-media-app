@@ -5,12 +5,14 @@
 
 .user p {
   font-weight: bold;
+  text-decoration: none;
 }
 
 .user {
   display: flex;
   margin-left: 2%;
   gap: 10px;
+  text-decoration: none;
 }
 
 .post{
@@ -19,7 +21,7 @@
   grid-gap: 5px;
 }
 
-.post img{
+.post img {
   max-width: 100%;
   height: auto;
 }

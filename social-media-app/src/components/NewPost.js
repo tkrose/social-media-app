@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import css from './NewPost.module.css';
-import publicUrl from '../utils/publicUrl';
 import FileLoader from './FileLoader.js';
+import { Link, useHistory } from "react-router-dom";
 
 function NewPost(props) {
   const [dragging, setDragging] = useState(false); // to show a dragging effect
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
-  const [error, setError] = useState(''); // to show an error message
+  const [error] = useState(''); // to show an error message
+  const history = useHistory();
 
   function handleFileDragEnter(e){
     setDragging(true);
   }
+  
   function handleFileDragLeave(e){
     setDragging(false);
   }
+
   function handleFileDrop(e){
     if (e.dataTransfer.types.includes('Files')===false){
 			return;
@@ -27,7 +30,6 @@ function NewPost(props) {
       if (file.type.match(/image.*/)){
 				let reader = new FileReader();			
 				reader.onloadend = (e) => {
-					// TODO: call setPhoto with e.target.result (this is a Base64 image string)
           setPhoto(e.target.result);
 		
 				};
@@ -36,33 +38,25 @@ function NewPost(props) {
     }
     setDragging(false);    
   }
+
   function handleDescChange(e){
-		// TODO: call setDesc
     setDesc(e);
   }
+
   function handleSubmit(e){
-		// TODO:
-		// 1. Prevent default behavior
-		// 2. Show error msg if failed and exit
-		// 3. Call the storage update function passed from the parent
-		// 4. Clear error msg
-    e.preventDefault() // 1. Prevent default behavior
-    try {
-      props.onPost(photo,desc);
-    }
-    catch (e) {
-      setError(e);
-      return;
-    }
-    setError(''); // 4. Clear error msg
+    props.onPost(photo,desc);
+    e.preventDefault();
+    history.push('/');
   }
-  function handleCancel(){
-    // TODO: Notify the parent about the cancellation
-    props.onCancel();
-  }
+
+  // function handleCancel(){
+  //   props.onCancel();
+  //   history.goBack();
+  // }
+
+  //EDIT : Use push or goBack in the history instance to navigate to Home or the previous page depending on the status of adding a new post. You no longer need setPage and cancelPost in App.
   return (
     <div>
-        
         <div className={css.photo}>
           {!photo?  <div className={css.message}>Drop your image</div>:
                     <img src={photo} alt="New Post"/>}
@@ -74,7 +68,6 @@ function NewPost(props) {
 	            <div className={[css.dropArea, dragging?css.dragging:null].join(' ')}
               ></div>
 	          </FileLoader>
-          
         </div>
         
         <div className={css.desc}>
@@ -86,8 +79,10 @@ function NewPost(props) {
 					<p>{error}</p>
         </div>
         <div className={css.actions}>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleSubmit}>Share</button>          
+          <Link to="/">
+            <button>Cancel</button>
+          </Link>
+          <button onClick={handleSubmit}>Share</button>         
         </div>
     </div>
   );
