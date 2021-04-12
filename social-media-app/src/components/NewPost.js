@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import css from './NewPost.module.css';
 import FileLoader from './FileLoader.js';
 import { Link, useHistory } from "react-router-dom";
+import { StoreContext } from 'contexts/StoreContext';
 
-function NewPost(props) {
+function NewPost() {
+  let {addPost} = useContext(StoreContext);
   const [dragging, setDragging] = useState(false); // to show a dragging effect
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
@@ -44,17 +46,21 @@ function NewPost(props) {
   }
 
   function handleSubmit(e){
-    props.onPost(photo,desc);
-    e.preventDefault();
+    if(photo===null){
+      alert('ERROR: Post photo is empty!');
+      handleCancel();
+      return;
+    }
+
+    addPost(photo,desc);
     history.push('/');
+    e.preventDefault();
   }
 
-  // function handleCancel(){
-  //   props.onCancel();
-  //   history.goBack();
-  // }
+  function handleCancel(){
+    // cancelPost();
+  }
 
-  //EDIT : Use push or goBack in the history instance to navigate to Home or the previous page depending on the status of adding a new post. You no longer need setPage and cancelPost in App.
   return (
     <div>
         <div className={css.photo}>

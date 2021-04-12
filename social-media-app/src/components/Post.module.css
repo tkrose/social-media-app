@@ -1,6 +1,8 @@
 .user img {
-  height: 45px;
+  height: 32px;
+  width: 32px;
   border-radius: 100%;
+  object-fit: cover;
 }
 
 .user p {
@@ -10,20 +12,20 @@
 
 .user {
   display: flex;
+  align-items: center;
   margin-left: 2%;
   gap: 10px;
   text-decoration: none;
 }
 
 .post{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5px;
+  
 }
 
 .post img {
   max-width: 100%;
   height: auto;
+  margin-left: 0%;
 }
 
 .icons {

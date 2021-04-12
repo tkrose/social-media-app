@@ -1,30 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StoreContext } from 'contexts/StoreContext';
 import css from './Profile.module.css';
 import publicUrl from '../utils/publicUrl';
 import PostThumbnail from './PostThumbnail';
 import { Link, useParams } from "react-router-dom";
 
-function Profile(props) {
-  const {store} = props;
+function Profile() {
+  let {users, posts, followers, currentUserId, addFollower, removeFollower} = useContext(StoreContext);
   let {userId} = useParams();
-  const userObj = (userId === undefined ? store.users.find(user => user.id === store.currentUserId) : store.users.find(user => user.id === userId)); 
-  const posts = findPosts(userObj.id, store);
-  const followers = findFollowers(userObj.id, store);
-  const following = findFollowing(userObj.id, store);
+  const userObj = (userId === undefined ? users.find(user => user.id === currentUserId) : users.find(user => user.id === userId)); 
+  //const posts = findPosts(userObj.id);
+  //const followers = findFollowers(userObj.id);
+  //const following = findFollowing(userObj.id);
 
   function handleFollow() {
-    props.onFollow(userId);
+    addFollower(userId);
   }
   
   function handleUnfollow() {
-    props.onUnfollow(userId);
+    removeFollower(userId);
   }
 
   return (
 		<div className={css.allprofile}>
       <div className={css.user}>
         <img src={publicUrl(userObj.photo)} alt="Profile Pic"/>
-        {(store.followers.filter(follower=>(follower.followerId===store.currentUserId && follower.userId === userObj.id)).length > 0)?
+        {(followers.filter(follower=>(follower.followerId===currentUserId && follower.userId === userObj.id)).length > 0)?
           <button onClick={handleUnfollow} class={css.followBtn}>Unfollow</button> :
           <button onClick={handleFollow} class={css.unfollowBtn}>Follow</button> 
         }
@@ -35,8 +36,8 @@ function Profile(props) {
       </div>
       <div className={css.followers}>
         <p>{posts.length}<br></br>posts</p>
-        <p>{followers}<br></br>followers</p>
-        <p>{following}<br></br>following</p>
+        <p>{followers.filter(follower=>follower.userId===userObj.id).length}<br></br>followers</p>
+        <p>{followers.filter(following=>following.followerId===userObj.id).length}<br></br>following</p>
       </div>
       <div className={css.posts}>
         {posts.sort((a,b)=>new Date(b.datetime) - new Date(a.datetime))
@@ -51,16 +52,16 @@ function Profile(props) {
 	);
 }
 
-function findPosts(id, store){
-  return store.posts.filter(user=>user.userId===id);
-}
+//function findPosts(id){
+//  return posts.filter(user=>user.userId===id);
+//}
 
-function findFollowers(id, store){
-  return store.followers.filter(follower=>follower.userId===id).length;
-}
+//function findFollowers(id){
+//  return followers.filter(follower=>follower.userId===id).length;
+//}
 
-function findFollowing(id, store){
-  return store.followers.filter(following=>following.followerId===id).length;
-}
+//function findFollowing(id){
+//  return followers.filter(following=>following.followerId===id).length;
+//}
 
 export default Profile;
